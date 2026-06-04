@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Sruthi Duduka – Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --ink: #0e0b09;
+    --cream: #f5f0e8;
+    --warm: #e8dfc8;
+    --rust: #b84c2b;
+    --gold: #c9963a;
+    --muted: #7a6f62;
+    --card: #faf7f2;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--cream);
+    color: var(--ink);
+    font-family: 'DM Mono', monospace;
+    font-weight: 300;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ---- NOISE TEXTURE OVERLAY ---- */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.4;
+  }
+
+  /* ---- NAV ---- */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.2rem 4rem;
+    background: rgba(245,240,232,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(14,11,9,0.08);
+  }
+
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink);
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2.5rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-size: 0.68rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--rust); }
+
+  /* ---- HERO ---- */
+  #hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    padding: 8rem 4rem 4rem;
+    gap: 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  #hero::after {
+    content: 'SD';
+    position: absolute;
+    right: -2rem;
+    bottom: -4rem;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28vw;
+    font-weight: 300;
+    color: rgba(14,11,9,0.04);
+    line-height: 1;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .hero-text { position: relative; z-index: 2; }
+
+  .hero-tag {
+    font-size: 0.65rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--rust);
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+  }
+
+  .hero-tag::before {
+    content: '';
+    display: block;
+    width: 2.5rem;
+    height: 1px;
+    background: var(--rust);
+  }
+
+  h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(3.5rem, 7vw, 6rem);
+    font-weight: 300;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.2rem;
+  }
+
+  h1 em {
+    font-style: italic;
+    color: var(--rust);
+  }
+
+  .hero-subtitle {
+    font-size: 0.72rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin: 1.5rem 0 2.5rem;
+  }
+
+  .hero-objective {
+    font-size: 0.82rem;
+    color: var(--muted);
+    max-width: 38ch;
+    line-height: 1.8;
+    border-left: 2px solid var(--gold);
+    padding-left: 1.2rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .cta-row {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    padding: 0.85rem 2rem;
+    text-decoration: none;
+    transition: all 0.25s;
+    display: inline-block;
+  }
+
+  .btn-primary {
+    background: var(--ink);
+    color: var(--cream);
+    border: 1px solid var(--ink);
+  }
+
+  .btn-primary:hover {
+    background: var(--rust);
+    border-color: var(--rust);
+  }
+
+  .btn-outline {
+    background: transparent;
+    color: var(--ink);
+    border: 1px solid var(--ink);
+  }
+
+  .btn-outline:hover {
+    background: var(--ink);
+    color: var(--cream);
+  }
+
+  /* Hero photo */
+  .hero-photo {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .photo-frame {
+    position: relative;
+    width: 340px;
+    height: 420px;
+  }
+
+  .photo-frame::before {
+    content: '';
+    position: absolute;
+    top: 16px; left: 16px;
+    width: 100%; height: 100%;
+    border: 1.5px solid var(--gold);
+    z-index: 0;
+  }
+
+  .photo-frame img {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    filter: grayscale(15%) contrast(1.05);
+  }
+
+  .photo-caption {
+    position: absolute;
+    bottom: -2.5rem;
+    right: 0;
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* ---- SECTION BASE ---- */
+  section {
+    padding: 6rem 4rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    font-size: 0.62rem;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--rust);
+    margin-bottom: 0.8rem;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+  }
+
+  .section-label::before {
+    content: '';
+    display: block;
+    width: 2rem;
+    height: 1px;
+    background: var(--rust);
+  }
+
+  h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.2rem, 4vw, 3.4rem);
+    font-weight: 300;
+    line-height: 1.1;
+    margin-bottom: 3rem;
+    letter-spacing: -0.02em;
+  }
+
+  /* ---- SKILLS ---- */
+  #skills { background: var(--ink); color: var(--cream); max-width: 100%; padding: 6rem 4rem; }
+
+  #skills .inner { max-width: 1200px; margin: 0 auto; }
+
+  #skills .section-label { color: var(--gold); }
+  #skills .section-label::before { background: var(--gold); }
+  #skills h2 { color: var(--cream); }
+
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5px;
+    background: rgba(255,255,255,0.08);
+    border: 1.5px solid rgba(255,255,255,0.08);
+  }
+
+  .skill-cat {
+    background: var(--ink);
+    padding: 2rem 1.8rem;
+    transition: background 0.2s;
+  }
+
+  .skill-cat:hover { background: #1a1612; }
+
+  .skill-cat-title {
+    font-size: 0.6rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1rem;
+  }
+
+  .skill-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .tag {
+    font-size: 0.68rem;
+    color: rgba(245,240,232,0.7);
+    border: 1px solid rgba(245,240,232,0.15);
+    padding: 0.3rem 0.7rem;
+    letter-spacing: 0.05em;
+  }
+
+  /* ---- PROJECTS ---- */
+  .projects-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .project-card {
+    display: grid;
+    grid-template-columns: 120px 1fr auto;
+    align-items: start;
+    gap: 2rem;
+    padding: 2.5rem 0;
+    border-bottom: 1px solid rgba(14,11,9,0.1);
+    transition: background 0.2s;
+    cursor: default;
+  }
+
+  .project-card:first-child { border-top: 1px solid rgba(14,11,9,0.1); }
+
+  .project-card:hover { background: rgba(14,11,9,0.02); padding-left: 1rem; padding-right: 1rem; margin: 0 -1rem; }
+
+  .project-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 3.5rem;
+    font-weight: 300;
+    color: rgba(14,11,9,0.12);
+    line-height: 1;
+    padding-top: 0.3rem;
+  }
+
+  .project-body h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem;
+    font-weight: 400;
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.01em;
+  }
+
+  .project-body p {
+    font-size: 0.76rem;
+    color: var(--muted);
+    max-width: 55ch;
+    line-height: 1.8;
+  }
+
+  .project-meta {
+    text-align: right;
+  }
+
+  .project-date {
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    display: block;
+    margin-bottom: 0.8rem;
+  }
+
+  .project-tech {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    align-items: flex-end;
+  }
+
+  .tech-pill {
+    font-size: 0.6rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--rust);
+    border: 1px solid var(--rust);
+    padding: 0.2rem 0.6rem;
+    opacity: 0.8;
+  }
+
+  /* ---- EDUCATION ---- */
+  #education { background: var(--warm); max-width: 100%; }
+  #education .inner { max-width: 1200px; margin: 0 auto; }
+
+  .edu-list { display: flex; flex-direction: column; gap: 1.5rem; }
+
+  .edu-card {
+    background: var(--card);
+    padding: 2rem 2.5rem;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: 2rem;
+    border-left: 3px solid transparent;
+    transition: border-color 0.2s;
+  }
+
+  .edu-card:hover { border-left-color: var(--rust); }
+
+  .edu-card h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.25rem;
+    font-weight: 400;
+    margin-bottom: 0.3rem;
+  }
+
+  .edu-card .inst {
+    font-size: 0.72rem;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+  }
+
+  .edu-score {
+    text-align: right;
+  }
+
+  .score-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.2rem;
+    font-weight: 300;
+    color: var(--rust);
+    line-height: 1;
+  }
+
+  .score-label {
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* ---- CERTIFICATIONS ---- */
+  .cert-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .cert-card {
+    background: var(--card);
+    border: 1px solid rgba(14,11,9,0.08);
+    padding: 1.8rem;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .cert-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(14,11,9,0.1);
+  }
+
+  .cert-card::after {
+    content: '✦';
+    position: absolute;
+    bottom: 1rem;
+    right: 1.2rem;
+    font-size: 1.5rem;
+    color: var(--gold);
+    opacity: 0.4;
+  }
+
+  .cert-org {
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--rust);
+    margin-bottom: 0.6rem;
+  }
+
+  .cert-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    font-weight: 400;
+    margin-bottom: 0.5rem;
+  }
+
+  .cert-date {
+    font-size: 0.62rem;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+  }
+
+  /* ---- CONTACT ---- */
+  #contact {
+    background: var(--ink);
+    color: var(--cream);
+    max-width: 100%;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  #contact::before {
+    content: 'HELLO';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22vw;
+    font-weight: 300;
+    color: rgba(255,255,255,0.03);
+    white-space: nowrap;
+    pointer-events: none;
+  }
+
+  #contact .inner {
+    max-width: 700px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
+  }
+
+  #contact .section-label { color: var(--gold); justify-content: center; }
+  #contact .section-label::before { background: var(--gold); }
+  #contact h2 { color: var(--cream); }
+
+  .contact-links {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: center;
+    margin-bottom: 3rem;
+  }
+
+  .contact-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-size: 0.78rem;
+    color: rgba(245,240,232,0.7);
+    text-decoration: none;
+    letter-spacing: 0.05em;
+    transition: color 0.2s;
+  }
+
+  .contact-item:hover { color: var(--gold); }
+
+  .contact-item span {
+    font-size: 0.6rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold);
+    min-width: 80px;
+    text-align: right;
+  }
+
+  /* ---- FOOTER ---- */
+  footer {
+    background: #080604;
+    color: rgba(245,240,232,0.25);
+    text-align: center;
+    padding: 1.5rem;
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+
+  /* ---- DIVIDER ---- */
+  .divider {
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(14,11,9,0.15), transparent);
+    margin: 0;
+  }
+
+  /* ---- ANIMATIONS ---- */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .hero-tag { animation: fadeUp 0.6s ease both; }
+  h1 { animation: fadeUp 0.6s 0.15s ease both; }
+  .hero-subtitle { animation: fadeUp 0.6s 0.25s ease both; }
+  .hero-objective { animation: fadeUp 0.6s 0.35s ease both; }
+  .cta-row { animation: fadeUp 0.6s 0.45s ease both; }
+  .hero-photo { animation: fadeUp 0.8s 0.3s ease both; }
+
+  /* ---- RESPONSIVE ---- */
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { gap: 1.2rem; }
+    #hero { grid-template-columns: 1fr; padding: 7rem 1.5rem 3rem; gap: 3rem; }
+    .hero-photo { order: -1; }
+    .photo-frame { width: 240px; height: 300px; }
+    section { padding: 4rem 1.5rem; }
+    #skills, #education, #contact { padding: 4rem 1.5rem; }
+    .project-card { grid-template-columns: 60px 1fr; }
+    .project-meta { display: none; }
+    #hero::after { font-size: 40vw; }
+    .edu-card { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Sruthi Duduka</div>
+  <ul class="nav-links">
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#education">Education</a></li>
+    <li><a href="#certifications">Certs</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero" style="max-width:100%; padding-top:8rem; padding-bottom:4rem;">
+  <div class="hero-text">
+    <div class="hero-tag">Computer Science Engineer · Hyderabad, India</div>
+    <h1>Sruthi<br><em>Duduka</em></h1>
+    <p class="hero-subtitle">Python · Machine Learning · Web Dev · Computer Vision</p>
+    <p class="hero-objective">
+      Aspiring engineer with a strong foundation in software development, data structures, and computer vision — eager to build intelligent, real-world solutions.
+    </p>
+    <div class="cta-row">
+      <a href="mailto:sruthiduduka123@gmail.com" class="btn btn-primary">Get in Touch</a>
+      <a href="https://linkedin.com/in/sruthi-duduka-164135288" target="_blank" class="btn btn-outline">LinkedIn ↗</a>
+      <a href="https://github.com/226P1A0544" target="_blank" class="btn btn-outline">GitHub ↗</a>
+    </div>
+  </div>
+  <div class="hero-photo">
+    <div class="photo-frame">
+      <img src="1000224700.png" alt="Sruthi Duduka"/>
+    </div>
+    <div class="photo-caption">B.Tech CSE · CGPA 8.32</div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- SKILLS -->
+<div id="skills">
+  <div class="inner">
+    <div class="section-label">Technical Skills</div>
+    <h2>What I Work With</h2>
+    <div class="skills-grid">
+      <div class="skill-cat">
+        <div class="skill-cat-title">Languages</div>
+        <div class="skill-tags">
+          <span class="tag">Python</span>
+          <span class="tag">JavaScript</span>
+        </div>
+      </div>
+      <div class="skill-cat">
+        <div class="skill-cat-title">Web Development</div>
+        <div class="skill-tags">
+          <span class="tag">HTML</span>
+          <span class="tag">CSS</span>
+        </div>
+      </div>
+      <div class="skill-cat">
+        <div class="skill-cat-title">Data & Databases</div>
+        <div class="skill-tags">
+          <span class="tag">MySQL</span>
+          <span class="tag">DBMS</span>
+          <span class="tag">Excel</span>
+          <span class="tag">Data Analytics</span>
+          <span class="tag">Visualization</span>
+        </div>
+      </div>
+      <div class="skill-cat">
+        <div class="skill-cat-title">Libraries & Frameworks</div>
+        <div class="skill-tags">
+          <span class="tag">OpenCV</span>
+          <span class="tag">MediaPipe</span>
+          <span class="tag">Machine Learning</span>
+        </div>
+      </div>
+      <div class="skill-cat">
+        <div class="skill-cat-title">Languages Spoken</div>
+        <div class="skill-tags">
+          <span class="tag">English</span>
+          <span class="tag">Telugu</span>
+          <span class="tag">Hindi</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section-label">Selected Work</div>
+  <h2>Projects</h2>
+  <div class="projects-list">
+
+    <div class="project-card">
+      <div class="project-num">01</div>
+      <div class="project-body">
+        <h3>AI-Driven Intelligent In-Car Decision Support</h3>
+        <p>Monitors vehicle health metrics in real time and optimises driver safety. Integrates ML algorithms to process diagnostics and provide smart route guidance for enhanced navigation.</p>
+      </div>
+      <div class="project-meta">
+        <span class="project-date">Jan – Mar 2026</span>
+        <div class="project-tech">
+          <span class="tech-pill">ML</span>
+          <span class="tech-pill">Python</span>
+          <span class="tech-pill">IoT</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-num">02</div>
+      <div class="project-body">
+        <h3>Gesture Drop – Touchless Text & Image Transfer</h3>
+        <p>Touchless interface using a webcam to track hand movements for contactless file and text management. Uses MediaPipe to capture real-time hand landmarks, simulating drag-and-drop actions.</p>
+      </div>
+      <div class="project-meta">
+        <span class="project-date">Sep – Nov 2025</span>
+        <div class="project-tech">
+          <span class="tech-pill">MediaPipe</span>
+          <span class="tech-pill">OpenCV</span>
+          <span class="tech-pill">Python</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-num">03</div>
+      <div class="project-body">
+        <h3>Food Detection & Calorie Estimator</h3>
+        <p>Interactive UI using ML and OpenCV to detect food items from images and live webcam streams. Integrated calorie estimation algorithm generating nutritional feedback upon food classification.</p>
+      </div>
+      <div class="project-meta">
+        <span class="project-date">Mar – Jun 2025</span>
+        <div class="project-tech">
+          <span class="tech-pill">OpenCV</span>
+          <span class="tech-pill">ML</span>
+          <span class="tech-pill">Python</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-num">04</div>
+      <div class="project-body">
+        <h3>Dynamic Quiz Application</h3>
+        <p>Responsive, dynamic web quiz suite with time-management challenges. Built with HTML, CSS, and JavaScript to deliver engaging interactive test experiences.</p>
+      </div>
+      <div class="project-meta">
+        <span class="project-date">Mar – May 2024</span>
+        <div class="project-tech">
+          <span class="tech-pill">HTML</span>
+          <span class="tech-pill">CSS</span>
+          <span class="tech-pill">JavaScript</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- EDUCATION -->
+<div id="education" style="padding: 6rem 4rem;">
+  <div class="inner">
+    <div class="section-label">Academic Background</div>
+    <h2>Education</h2>
+    <div class="edu-list">
+      <div class="edu-card">
+        <div>
+          <h3>B.Tech — Computer Science & Engineering</h3>
+          <div class="inst">Rishi MS Institute of Engineering and Technology for Women · 2022 – 2026</div>
+        </div>
+        <div class="edu-score">
+          <div class="score-num">8.32</div>
+          <div class="score-label">CGPA / 10</div>
+        </div>
+      </div>
+      <div class="edu-card">
+        <div>
+          <h3>Senior Secondary (XII) — Science</h3>
+          <div class="inst">Sri Chaitanya Junior Kalasala, Kukatpally · Telangana State Board · 2022</div>
+        </div>
+        <div class="edu-score">
+          <div class="score-num">8.92</div>
+          <div class="score-label">CGPA / 10</div>
+        </div>
+      </div>
+      <div class="edu-card">
+        <div>
+          <h3>Secondary Education (X)</h3>
+          <div class="inst">Sri Sai Vidya Niketan High School · SSC Board · 2020</div>
+        </div>
+        <div class="edu-score">
+          <div class="score-num">10.00</div>
+          <div class="score-label">CGPA / 10</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- CERTIFICATIONS -->
+<section id="certifications">
+  <div class="section-label">Professional Development</div>
+  <h2>Certifications & Training</h2>
+  <div class="cert-grid">
+    <div class="cert-card">
+      <div class="cert-org">Sonata</div>
+      <div class="cert-title">Data Analytics Training</div>
+      <div class="cert-date">Nov 2025 – Feb 2026</div>
+    </div>
+    <div class="cert-card">
+      <div class="cert-org">StaxTech</div>
+      <div class="cert-title">Front-End Developer Certification</div>
+      <div class="cert-date">May – Jun 2025</div>
+    </div>
+    <div class="cert-card">
+      <div class="cert-org">TASK, Hyderabad</div>
+      <div class="cert-title">SAP Training</div>
+      <div class="cert-date">Oct 2024 – Mar 2025</div>
+    </div>
+    <div class="cert-card">
+      <div class="cert-org">Unschool (Virtual)</div>
+      <div class="cert-title">Basics of HTML Coding</div>
+      <div class="cert-date">Mar – Dec 2024</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CONTACT -->
+<div id="contact" style="padding: 6rem 4rem;">
+  <div class="inner">
+    <div class="section-label">Let's Connect</div>
+    <h2>Get In Touch</h2>
+    <div class="contact-links">
+      <a class="contact-item" href="mailto:sruthiduduka123@gmail.com">
+        <span>Email</span>
+        sruthiduduka123@gmail.com
+      </a>
+      <a class="contact-item" href="tel:+919347961717">
+        <span>Phone</span>
+        +91 93479 61717
+      </a>
+      <a class="contact-item" href="https://linkedin.com/in/sruthi-duduka-164135288" target="_blank">
+        <span>LinkedIn</span>
+        linkedin.com/in/sruthi-duduka-164135288
+      </a>
+      <a class="contact-item" href="https://github.com/226P1A0544" target="_blank">
+        <span>GitHub</span>
+        github.com/226P1A0544
+      </a>
+      <a class="contact-item" href="#">
+        <span>Location</span>
+        Hyderabad, Telangana, India
+      </a>
+    </div>
+    <a href="mailto:sruthiduduka123@gmail.com" class="btn btn-primary" style="background:var(--gold);border-color:var(--gold);color:var(--ink);">Send a Message →</a>
+  </div>
+</div>
+
+<footer>
+  © 2026 Sruthi Duduka · Portfolio · Hyderabad, India
+</footer>
+
+</body>
+</html>
